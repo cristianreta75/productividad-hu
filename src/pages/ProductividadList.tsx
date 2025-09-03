@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import ProductividadDetalleDrawer from "@/components/ProductividadDetalleDrawer"
 import {
   Table,
   TableBody,
@@ -65,7 +66,8 @@ export default function ProductividadList() {
           {data.estado}
         </CardTitle>
         <p className="text-sm text-muted-foreground">
-          Importe total calculado: {data.importeTotal.toLocaleString("es-AR", {
+          Importe total calculado:{" "}
+          {data.importeTotal.toLocaleString("es-AR", {
             style: "currency",
             currency: "ARS",
           })}
@@ -78,7 +80,7 @@ export default function ProductividadList() {
               <TableHead>ID</TableHead>
               <TableHead>Empleado</TableHead>
               <TableHead>Importe</TableHead>
-              <TableHead>Detalles</TableHead>
+              <TableHead>Acciones</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -87,29 +89,15 @@ export default function ProductividadList() {
                 <TableCell>{e.empleadoId}</TableCell>
                 <TableCell>{e.empleadoNombre}</TableCell>
                 <TableCell>
-                  {e.importe !== null
-                    ? e.importe.toLocaleString("es-AR", {
-                        style: "currency",
-                        currency: "ARS",
-                      })
-                    : "-"}
+                  {e.importe !== null ? e.importe.toLocaleString("es-AR", { style: "currency", currency: "ARS", }) : "-"}
                 </TableCell>
                 <TableCell>
-                  {e.detalles.length > 0 ? (
-                    <ul className="list-disc pl-4">
-                      {e.detalles.map((d) => (
-                        <li key={d.detalleId}>
-                          {d.metodo} ({d.cantidadPracticas} prácticas) –{" "}
-                          {d.importe.toLocaleString("es-AR", {
-                            style: "currency",
-                            currency: "ARS",
-                          })}
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    "Sin detalles"
-                  )}
+                  <ProductividadDetalleDrawer
+                    empleadoId={e.empleadoId}
+                    empleadoNombre={e.empleadoNombre}
+                    anio={data.anio}
+                    mes={data.mes}
+                  />
                 </TableCell>
               </TableRow>
             ))}
@@ -119,11 +107,3 @@ export default function ProductividadList() {
     </Card>
   )
 }
-
-/*import { Card, CardContent } from "@/components/ui/card"
-
-export default function Productividad() {
-  return (
-    <Card><CardContent className="p-6">Listado de productividad.</CardContent></Card>
-  )
-}*/
