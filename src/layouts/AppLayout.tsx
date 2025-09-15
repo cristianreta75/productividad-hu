@@ -6,7 +6,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 const navItems = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard },
-  { to: "/productividad", label: "ProductividadList", icon: Users },
+  { to: "/productividad", label: "Listado de Productividad", icon: Users },
 ]
 
 function NavLinkItem({ to, label, Icon }: { to: string; label: string; Icon: any }) {
