@@ -121,6 +121,10 @@ export default function ProductividadList() {
           />
 
           <Button onClick={fetchData}>Buscar</Button>
+          {/* Agregado de Botón de refrescar Productividad */}
+          <Button variant="secondary" onClick={fetchData}>
+            Refrescar
+          </Button>
         </div>
       </CardHeader>
 
