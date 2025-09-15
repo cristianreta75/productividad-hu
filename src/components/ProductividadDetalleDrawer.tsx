@@ -49,6 +49,18 @@ export default function ProductividadDetalleDrawer({
       setLoading(false)
     }
   }
+  {/* Re-calcular Productividad */}
+  const recalcularDetalle = async (detalleId: number) => {
+      try {
+        await fetch(
+          `http://172.22.116.159:8081/api/productividad/recalcular-detalle/${detalleId}`,
+          { method: "POST" }
+        )
+        await fetchDetalles() // refrescar después de recalcular
+      } catch (e) {
+        console.error("Error recalculando detalle:", e)
+      }
+    }
 
   return (
     <Drawer>
@@ -78,6 +90,8 @@ export default function ProductividadDetalleDrawer({
                   <TableHead>Forma</TableHead>
                   <TableHead>Cant.</TableHead>
                   <TableHead>Importe</TableHead>
+                  {/* Encabezado de Acciones */}
+                  <TableHead>Acciones</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -87,6 +101,16 @@ export default function ProductividadDetalleDrawer({
                     <TableCell>{d.formaCalculo}</TableCell>
                     <TableCell>{d.cantidadPracticas}</TableCell>
                     <TableCell>${d.importe.toFixed(2)}</TableCell>
+                    {/* Acciones por fila */}
+                    <TableCell>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => recalcularDetalle(d.detalleId)}
+                      >
+                        Recalcular
+                      </Button>
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
